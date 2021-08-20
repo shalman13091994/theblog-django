@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<h3>Login...</h3>
+<br><br>
+
+<div class = 'form-group'>
+    <form method ='POST'>
+        {% csrf_token %}
+    
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder = 'Username' name='username'>
+              <div id="emailHelp" class="form-text">username should not assocaited be with social platforms</div>
+              
+              <input type="password" class="form-control" placeholder = 'password' name='password'>
+     </div> 
+     <br>     
+       
+    <button class="btn btn-secondary">Login</button>
+ <br>
+    <small id ='emailHelp' class='form-text text-muted'>Not A User? Register<a href ="{% url 'register' %}"> Here</a></small>
+</div>
+{% endblock %}

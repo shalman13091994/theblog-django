@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Add Category Blog{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+    <h3>Add Category...</h3>
+    <br><br>
+
+    <div class = 'form-control'>
+        <form method ='POST'>
+            {% csrf_token %}
+            {{form.as_p }} 
+            <button style='margin-right:16px'  class="btn btn-secondary">post</button>
+      
+           <a href="{% url 'home' %}" class="btn btn-secondary" style='margin-right:10px' role="button" aria-pressed="true">back</a>
+
+        </form>
+        
+    </div>
+{% else %}
+   <h5>you are not logged in </h5>
+   <a href = {% url 'login' %}>login</a>/
+   <a href= {% url 'register' %}> register</a>
+
+{% endif %}
+
+{% endblock %}

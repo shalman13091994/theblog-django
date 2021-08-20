@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}welcome to blog{% endblock %}
+{% block content %}
+
+<h2>Posts</h2>
+
+{% for i in object_list %}
+
+    
+   <li><a href = {% url 'detail' i.pk %}>{{i.title}}</a> -- title <br>
+        author firstname: {{ i.author.first_name }} <br>
+        author lastname: {{ i.author.last_name}} - {{i.post_date}} <br>
+        author email: {{i.author.email}}<br>
+        author -- {{i.author}} </li>
+        category--<strong>
+        <a href = {% url 'category_view' i.category|slugify %}>{{i.category}}</a></strong>
+
+        {% if user.is_authenticated %}
+        <!-- i from the for loop in object_list -->
+           {% if user.id == i.author.id %} 
+
+                <a href={% url 'update' i.pk %}><small>(edit)</small></a>
+                <a href={% url 'delete' i.pk %}><small>(delete)</small></a> <br>
+
+            {% endif %}
+      
+        {% endif %}
+        <br>
+    {{i.body |safe }}
+    <hr>
+
+{% endfor %}
+    </li>
+    </ul>
+
+  
+{% endblock %}
+

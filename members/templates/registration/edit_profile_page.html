@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile Page {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    
+    {% if user.id == profile.user.id %}
+        <h3>Edit Profile Page...</h3>
+        <br><br>
+
+        <div class = 'form-control'>
+            <!-- multipat/for-data is for images -->
+            <form method ='POST' enctype = 'multipart/form-data'>
+                {% csrf_token %}
+                <!-- form.media is for richtexteditor -->
+                {{form.as_p }} 
+
+                <button style='margin-right:16px'  class="btn btn-secondary">Update Profile Page</button>
+        
+                <a href="{% url 'home' %}" class="btn btn-secondary" style='margin-right:10px' role="button" aria-pressed="true">back</a>
+                    
+            </form>
+            
+        </div>
+    {% else %}
+        <h4>You aren't authorised to edit the profile</h4>
+    {% endif %}
+
+
+{% else %}
+   <h5>you are not logged in </h5>
+   <a href = {% url 'login' %}>login</a>/
+   <a href= {% url 'register' %}> register</a>
+  
+
+{% endif %}
+
+{% endblock %}

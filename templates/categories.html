@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}categories{% endblock %}
+{% block content %}
+
+{% if category_post %}
+<!-- categoryview -->
+    <h1>{{cats}}</h1> 
+    {% for i in category_post %}
+
+    <li><a href = {% url 'detail' i.pk %}>{{i.title}}</a> -- title <br>
+        author firstname: {{ i.author.first_name }} <br>
+        author lastname: {{ i.author.last_name}} - {{i.post_date}} <br>
+        author email: {{i.author.email}}<br>
+        author -- {{i.author}} </li>
+        category--<strong>{{i.category}}</strong>
+
+        <a href={% url 'update' i.pk %}><small>(edit)</small></a>
+        <a href={% url 'delete' i.pk %}><small>(delete)</small></a> <br>
+
+    {% endfor %}
+
+{% else %}
+
+<h3>sorry this page is not exist</h3>
+
+{% endif %}
+
+{% endblock %}

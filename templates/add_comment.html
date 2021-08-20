@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Add Comment{% endblock %}
+{% block content %}
+
+    <h3>Add Comment...</h3>
+    <br><br>
+
+    <div class = 'form-control'>
+        <!-- multipat/for-data is for images -->
+        <form method ='POST'>
+            {% csrf_token %}
+         
+            {{form.as_p }} 
+
+            <button style='margin-right:16px'  class="btn btn-secondary">post comment</button>
+      
+            <a href="{% url 'home' %}" class="btn btn-secondary" style='margin-right:10px' role="button" aria-pressed="true">back</a>
+                
+        </form>
+        
+    </div>
+
+     
+{% endblock %}

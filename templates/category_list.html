@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block ttle %}Blog Categories{% endblock %}
+{% block content %}
+
+<h2>Blog Categories</h2>
+<!-- from class articeldetailview we get this cat_menu_list contextvariable-->
+<!-- from categorylistview context variable cat_menu_list-->
+  {% for item in cat_menu_list %}
+   
+  <h4><a class = 'dropdown-item' href = {% url 'category_view' item  %}>{{item}}</a></h4>
+   
+  {% endfor %}
+
+
+<br>
+<hr>
+{% for item in cat_menu_list %}
+{{item}}
+{% endfor %}
+
+{% endblock %}

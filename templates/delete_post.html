@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Delete post{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+    {% if user.id == post.author.id %}
+        <h2>Delete Post...</h2>
+        <h4>Delete: {{object.title }}</h4>
+        <br><br>
+
+        <div class = 'form-group'>
+            <form method ='POST'>
+                {% csrf_token %}
+            
+            <strong> Are you sure?</strong><br>
+            <button style='margin-right:16px'  class="btn btn-secondary">Delete</button>
+        
+            <a href="{% url 'home' %}" class="btn btn-secondary" style='margin-right:10px' role="button" aria-pressed="true">back</a>
+            </form>
+            
+        </div>
+    {% else %}
+         <h3>You are not authorised {{ user }}</h3>    
+    {% endif %}
+
+
+{% else %}
+
+   <h5>you are not logged in </h5>
+   <a href = {% url 'login' %}>login</a>/
+   <a href= {% url 'register' %}> register</a>
+
+{% endif %}
+
+{% endblock %}

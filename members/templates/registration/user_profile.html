@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+
+<h1>User Profile</h1>
+
+{{page_user}}
+
+<div class="card mb-3">
+    <div class="row no-gutters">  
+      <div class="col-md-2">
+
+    {% if page_user.profile_pic %}
+        <img src="{{page_user.profile.profile_pic.url}}" class="rounded-circle" width = 180 height =180 class="img-fluid rounded-start" alt="...">
+      </div>
+    {% else %}
+        <img src="{% static 'theblog/images/default_pic.jpg' %}" class="rounded-circle" width = 180 height =180 class="img-fluid rounded-start" alt="...">
+      </div>
+    {% endif %} 
+    
+
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title"> {{page_user.user.author}}</h5>
+          <p class="card-text"><small class="text-muted">
+  
+                {% if page_user.website_url %}
+                  <a href = "{{ page_user.website_url }}" >Website</a>|
+                {% endif %}
+
+                {% if page_user.facebook_url %}
+                  <a href = "{{  page_user.facebook_url }}" >Facebook</a> |
+                {% endif %}
+
+                {% if page_user.twitter_url %}
+                  <a href = "{{  page_user.twitter_url }}" >Twitter</a> |
+                {% endif %}
+                
+                <!-- if piniterest url is then show -->
+                {% if page_user.pinterest_url %}
+                  <a href = "{{  page_user.pinterest_url }}" >Pinterest</a> 
+                {% endif %}
+
+            </small></p>
+          <p class="card-text">{{ page_user.bio }}</p>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- 
+<img src ="{{post.author.profile.profile_pic.url}}" class="rounded-circle" width = 100 height =100> -->
+
+{% endblock %}

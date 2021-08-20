@@ -1,0 +1,148 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <title>
+        {% block title %}
+        welcome to blog
+        {% endblock %}
+    </title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid"> 
+          <a class="navbar-brand" href="{% url 'home' %}">new blogu!!</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+              <!-- Category menu context ['cat_menu'] -->
+              {% if cat_menu %} 
+              <div>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">  Category  </a>
+              
+                  <ul class="dropdown-menu" > 
+                    {% for item in cat_menu %}
+                    <li><a class="dropdown-item" href="{% url 'category_view' item|slugify %}">{{item}}</a></li><br>
+                    {% endfor %}
+                  </ul>
+                </li>
+              </div>
+            <!-- if the category is not used or not there then it will be mention under the categories list -->
+             {% else %} 
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'category-list' %}">Categories List</a>
+              </li>
+          {% endif %}
+           
+          {% if user.is_authenticated %}
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'create' %}">Add post</a>
+           </li>
+
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'category' %}">Add category</a>
+           </li>
+          
+            </ul>
+          </li>
+
+           <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+            <li class="nav-item"> 
+<!-- we haven't create login page it will get it from the main url django.contrib.auth.urls so no need to create view n url for login n logout--> 
+
+              <a class="nav-link" href="#"></a> 
+            </li>
+          </ul>
+
+          {% else %}
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"> 
+<!-- we haven't create login page it will get it from the main url django.contrib.auth.urls so no need to create view n url for login n logout--> 
+              <a class="nav-link" href="{% url 'login' %}">login</a> 
+            </li>
+          {% endif %}
+        </ul>
+
+        {% if user.is_authenticated %}
+          {% if user.profile.id %}
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item"> 
+
+                <!-- edit-profile from members app -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{user}}</a>
+              <ul class="dropdown-menu dropdwon-menu-right">
+                <li><a class="dropdown-item" href="{% url 'edit-profile' %}">Edit Settings</a></li>
+                 
+  <!-- when we register new, after login  base page tries to reflect profile page but for new user they didnt created the profile page
+  but its not happening because we have created the pages using the django forms and userdefined forms -->
+  <!-- so we have to create a create profile page before the Edit Profile Page -->
+              {% if user.profile.id %}
+
+                <li><a class="dropdown-item" href="{% url 'edit-profile-page' user.profile.id %}">Edit Profile Page</a></li>
+                <li><a class="dropdown-item" href="{% url 'show_profile_page'  user.profile.id %}">Show Profile Page</a></li>
+                {% else %}
+
+              <li><a class="dropdown-item" href="{% url 'create-profile-page' %}">Create Profile Page</a></li>
+              
+              {% endif %}
+           
+              </ul>
+            </li>
+            </ul>
+          {% endif %}
+    
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"> 
+<!-- we haven't create login page it will get it from the main url django.contrib.auth.urls so no need to create view n url for login n logout--> 
+
+              <a class="nav-link" href="{% url 'logout' %}">logout</a> 
+            </li>
+          </ul>
+
+        {% endif %}
+      </div>
+      </nav>
+
+      <br>
+      <div class = 'container'>
+    
+    {% block content %}
+    
+    {% endblock %}
+
+      </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
+
+<!-- "" base file for checking the commit in the github-->

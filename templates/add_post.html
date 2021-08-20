@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Add post{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+    <h3>Add Post...</h3>
+    <br><br>
+
+    <div class = 'form-control'>
+        <!-- multipat/for-data is for images -->
+        <form method ='POST' enctype = 'multipart/form-data'>
+            {% csrf_token %}
+            <!-- form.media is for richtexteditor -->
+            {{form.media}}
+            {{form.as_p }} 
+
+            <button style='margin-right:16px'  class="btn btn-secondary">post</button>
+      
+            <a href="{% url 'home' %}" class="btn btn-secondary" style='margin-right:10px' role="button" aria-pressed="true">back</a>
+                
+        </form>
+        
+    </div>
+<!--elder is the id in the forms--> 
+    <script>
+        var name = "{{ user.id }}";
+        
+        document.getElementById('elder').value = name; 
+    </script>
+     
+{% else %}
+   <h5>you are not logged in </h5>
+   <a href = {% url 'login' %}>login</a>/
+   <a href= {% url 'register' %}> register</a>
+  
+
+{% endif %}
+
+{% endblock %}
